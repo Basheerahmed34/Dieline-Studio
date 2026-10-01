@@ -1,0 +1,132 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with authentication and role metadata",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique user identifier matching request.auth.uid"
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name of the user",
+          "maxLength": 100
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "User email address"
+        },
+        "avatar": {
+          "type": "string",
+          "description": "Avatar URL"
+        },
+        "provider": {
+          "type": "string",
+          "enum": ["google", "facebook", "email", "password"],
+          "description": "Authentication provider"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "User creation timestamp"
+        }
+      },
+      "required": ["id", "email", "createdAt"]
+    },
+    "Project": {
+      "title": "Project",
+      "description": "Saved packaging dieline configuration belonging to a user",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique project identifier"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner user UID"
+        },
+        "name": {
+          "type": "string",
+          "description": "User assigned project name",
+          "maxLength": 120
+        },
+        "templateId": {
+          "type": "string",
+          "description": "ID of packaging template (e.g. straight-tuck-end)"
+        },
+        "dimensions": {
+          "type": "object",
+          "description": "Parametric dimension values (W, H, D, etc.)"
+        },
+        "settings": {
+          "type": "object",
+          "description": "Technical settings (bleed, safeArea, caliper, glueFlapWidth)"
+        },
+        "unit": {
+          "type": "string",
+          "enum": ["mm", "cm", "in"],
+          "description": "Measurement unit"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last updated timestamp"
+        }
+      },
+      "required": ["id", "userId", "name", "templateId", "dimensions", "unit"]
+    },
+    "DownloadLog": {
+      "title": "DownloadLog",
+      "description": "Audit record of downloaded vector files",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique log ID"
+        },
+        "userId": {
+          "type": "string",
+          "description": "User ID who downloaded the file"
+        },
+        "templateId": {
+          "type": "string",
+          "description": "Template downloaded"
+        },
+        "format": {
+          "type": "string",
+          "enum": ["svg", "pdf", "json"],
+          "description": "File format downloaded"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of download"
+        }
+      },
+      "required": ["id", "userId", "templateId", "format"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User account document"
+    },
+    "/projects/{projectId}": {
+      "schema": "Project",
+      "description": "User saved dieline projects"
+    },
+    "/downloads/{downloadId}": {
+      "schema": "DownloadLog",
+      "description": "User vector export logs"
+    }
+  }
+}

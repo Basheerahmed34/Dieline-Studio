@@ -1,0 +1,6 @@
+{
+  "name": "Dieline Studio",
+  "description": "Professional 2D Packaging Dieline Generator. Parametric vector dielines for folding cartons, mailers, food boxes, pouches, bags, and labels with editable SVG/PDF export.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
